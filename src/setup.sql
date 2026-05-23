@@ -25,6 +25,34 @@ CREATE TABLE service_project (
         ON DELETE CASCADE
 );
 -- ========================================
+-- Category Table
+-- ========================================
+
+CREATE TABLE category (
+    category_id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL UNIQUE
+);
+
+-- ========================================
+-- Project category Table
+-- ========================================
+CREATE TABLE project_category (
+    project_id INT NOT NULL,
+    category_id INT NOT NULL,
+
+    PRIMARY KEY (project_id, category_id),
+
+    CONSTRAINT fk_project
+        FOREIGN KEY (project_id)
+        REFERENCES service_project(project_id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_category
+        FOREIGN KEY (category_id)
+        REFERENCES category(category_id)
+        ON DELETE CASCADE
+);
+-- ========================================
 -- Insert sample data: Organizations
 -- ========================================
 INSERT INTO organization (name, description, contact_email, logo_filename)
@@ -122,3 +150,60 @@ VALUES
  'Gathering and distributing toys to children during the holidays.',
  'UnityServe Headquarters',
  '2026-12-05');
+
+-- ========================================
+-- Insert sample data: Category
+-- ========================================
+
+INSERT INTO category (name)
+VALUES
+('Community Service'),
+('Environmental'),
+('Education'),
+('Food Assistance'),
+('Construction');
+
+-- ========================================
+-- Insert sample data: Projects Category
+-- ========================================
+
+INSERT INTO project_category (project_id, category_id)
+VALUES
+-- BrightFuture Builders projects
+(1, 5), -- Construction
+(1, 1), -- Community Service
+
+(2, 5),
+(2, 1),
+
+(3, 3), -- Education
+(3, 1),
+
+(4, 2), -- Environmental
+(4, 1),
+
+(5, 5),
+
+-- GreenHarvest Growers projects
+(6, 2),
+(6, 3),
+
+(7, 3),
+
+(8, 2),
+
+(9, 1),
+(9, 2),
+
+(10, 2),
+
+-- UnityServe Volunteers projects
+(11, 4), -- Food Assistance
+
+(12, 1),
+
+(13, 1),
+
+(14, 3),
+
+(15, 1);
