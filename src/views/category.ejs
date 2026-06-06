@@ -18,6 +18,12 @@
   <% } else { %>
     <p>No projects are currently assigned to this category.</p>
   <% } %>
+
+  <p>
+    <a href="/edit-category/<%= category.category_id %>" class="action-link">
+        Edit Category
+    </a>
+  </p>
 </main>
 
 <%- include('partials/footer') %>
