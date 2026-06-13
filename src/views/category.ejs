@@ -20,9 +20,11 @@
   <% } %>
 
   <p>
+    <% if (user && user.role_name === 'admin') { %>
     <a href="/edit-category/<%= category.category_id %>" class="action-link">
         Edit Category
     </a>
+    <% } %>
   </p>
 </main>
 
