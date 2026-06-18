@@ -243,6 +243,87 @@ box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
 }
 
 /* =========================
+Volunteer Projects Dashboard
+========================= */
+
+.volunteer-project-list {
+    list-style: none;
+    padding: 0;
+
+    margin-top: 1.5rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.volunteer-project-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background-color: var(--accent-color);
+
+    padding: 1rem 1.5rem;
+
+    border-radius: 10px;
+
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.volunteer-project-item:hover {
+    transform: translateY(-2px);
+
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
+}
+
+.volunteer-project-link {
+    font-size: 1.1rem;
+    font-weight: bold;
+
+    color: var(--primary-color);
+
+    text-decoration: none;
+}
+
+.volunteer-project-link:hover {
+    color: var(--secondary-color);
+}
+
+.remove-volunteer-form {
+    margin: 0;
+    padding: 0;
+
+    background: none;
+    box-shadow: none;
+}
+
+.remove-volunteer-btn {
+    background-color: #c0392b;
+
+    padding: 0.5rem 1rem;
+
+    font-size: 0.9rem;
+}
+
+.remove-volunteer-btn:hover {
+    background-color: #a93226;
+}
+
+.remove-volunteer-form {
+    margin: 0;
+    padding: 0;
+    max-width: none;
+
+    background: none;
+    box-shadow: none;
+    border-radius: 0;
+}
+/* =========================
 Category Cards
 ========================= */
 
@@ -665,6 +746,12 @@ Responsive Design
         display: block;
         overflow-x: auto;
         white-space: nowrap;
+    }
+    .volunteer-project-item {
+    flex-direction: column;
+    gap: 1rem;
+
+    text-align: center;
     }
 
     }

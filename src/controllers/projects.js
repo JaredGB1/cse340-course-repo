@@ -1,5 +1,5 @@
 // Import any needed model functions
-import { getUpcomingProjects, getProjectDetails, createProject, updateProject } from '../models/projects.js';
+import { getUpcomingProjects, getProjectDetails, createProject, updateProject, isUserVolunteerForProject, addVolunteerToProject, removeVolunteerFromProject } from '../models/projects.js';
 import { getCategoriesByProjectId } from '../models/categories.js';
 import { getAllOrganizations } from '../models/organizations.js';
 import {body, validationResult} from 'express-validator';
@@ -41,9 +41,19 @@ const showProjectDetailsPage = async (req, res) => {
     const project = await getProjectDetails(projectId);
     const categories = await getCategoriesByProjectId(projectId);
 
+    let isVolunteer = false;
+
+    // Only check volunteer status if user is logged in
+    if (req.session.user) {
+        isVolunteer = await isUserVolunteerForProject(
+            projectId,
+            req.session.user.user_id
+        );
+    }
+
     const title = 'Project Details';
 
-    res.render('project', {title, project, categories});
+    res.render('project', {title, project, categories, isVolunteer});
 }
 
 const showNewProjectForm = async (req, res) => {
@@ -132,5 +142,28 @@ const processEditProjectForm = async (req, res) => {
 
     res.redirect(`/project/${projectId}`);
 };
+
+const volunteerForProject = async (req, res) => {
+    const projectId = req.params.id;
+    const userId = req.session.user.user_id;
+
+    await addVolunteerToProject(projectId, userId);
+
+    req.flash('success', 'You are now volunteering for this project.');
+
+    res.redirect(`/project/${projectId}`);
+};
+
+const removeVolunteerSignup = async (req, res) => {
+    const projectId = req.params.id;
+    const userId = req.session.user.user_id;
+
+    await removeVolunteerFromProject(projectId, userId);
+
+    req.flash('success', 'Volunteer signup removed.');
+
+    res.redirect(`/project/${projectId}`);
+};
+
 // Export any controller functions
-export { showProjectsPage, showProjectDetailsPage, showNewProjectForm, processNewProjectForm, projectValidation, processEditProjectForm, showEditProjectForm };
+export { showProjectsPage, showProjectDetailsPage, showNewProjectForm, processNewProjectForm, projectValidation, processEditProjectForm, showEditProjectForm, volunteerForProject, removeVolunteerSignup };

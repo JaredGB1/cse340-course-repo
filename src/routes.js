@@ -3,7 +3,7 @@ import express from 'express';
 import { showHomePage } from './controllers/index.js';
 import { showOrganizationsPage } from './controllers/organizations.js';
 import { showOrganizationDetailsPage, showNewOrganizationForm, processNewOrganizationForm, organizationValidation, showEditOrganizationForm, processEditOrganizationForm } from './controllers/organizations.js';
-import { showProjectsPage, showProjectDetailsPage, showNewProjectForm, processNewProjectForm, projectValidation, showEditProjectForm, processEditProjectForm } from './controllers/projects.js';
+import { showProjectsPage, showProjectDetailsPage, showNewProjectForm, processNewProjectForm, projectValidation, showEditProjectForm, processEditProjectForm, volunteerForProject, removeVolunteerSignup } from './controllers/projects.js';
 import { showCategoriesPage, showCategoryDetailsPage, showAssignCategoriesForm, processAssignCategoriesForm, showNewCategoryForm, processNewCategoryForm, showEditCategoryForm, processEditCategoryForm, categoryValidation } from './controllers/categories.js';
 import { testErrorPage } from './controllers/errors.js';
 import { showUserRegistrationForm, processUserRegistrationForm, processLoginForm, processLogout, showLoginForm, showDashboard, requireLogin, requireRole, showUsersPage, requireAdminForUsersPage } from './controllers/users.js';
@@ -72,6 +72,20 @@ router.post(
 // Routes to handle the assign categories to project form
 router.get('/assign-categories/:projectId', requireRole('admin'), showAssignCategoriesForm);
 router.post('/assign-categories/:projectId', requireRole('admin'), processAssignCategoriesForm);
+
+
+//Routes to volunteer for projects
+router.post(
+    '/project/:id/volunteer',
+    requireLogin,
+    volunteerForProject
+);
+
+router.post(
+    '/project/:id/remove-volunteer',
+    requireLogin,
+    removeVolunteerSignup
+);
 
 // User registration routes
 router.get('/register', showUserRegistrationForm);
